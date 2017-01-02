@@ -6,6 +6,8 @@ cd PublicGo
 
 $HOME/goLibraries/bin/gopherjs build dashboardScript.go -o ../Public/dashboardScript.js
 $HOME/goLibraries/bin/gopherjs build newPatientScript.go -o ../Public/newPatientScript.js
+$HOME/goLibraries/bin/gopherjs build patientDashboardScript.go -o ../Public/patientDashboardScript.js
+
 
 cd ..
 

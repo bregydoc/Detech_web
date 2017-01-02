@@ -155,5 +155,16 @@ func GetRouter() *gin.Engine{
 
 		}
 	})
+
+	s.GET("/user/:id/patient/:dni", func(c *gin.Context) {
+		id := c.Param("id")
+		dniOfPatient := c.Param("dni")
+		c.HTML(http.StatusOK, "patientDashboard.html", gin.H{
+			"id" : id,
+			"dni" : dniOfPatient,
+		})
+	})
+
+
 	return s
 }

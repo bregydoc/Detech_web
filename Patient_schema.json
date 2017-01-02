@@ -1,0 +1,63 @@
+
+
+{
+  "paciente" : {
+
+    "id" : "id_detech", //static
+    "dni" : "number", //static
+    "nombre_completo" : "string", //static
+    "domicilio" : "string", //static
+    "telefono" : "number", //static
+    "numero_de_historia_clinica" : "number", //static
+    "sexo" : "boolean", //static
+
+    "historia_clinica": {
+      "fecha_de_ingreso" : "date", //dynamic with history //////////////////////////////////////Fotos termograficas
+      "numero_de_cama" : "number", //dynamic with history
+      "edad" : "number", //dynamic with history
+      "peso" : "number", //dynamic with history
+      "talla" : "number", //dynamic with history
+      "IMC" : "number", //dynamic with history and automatic (peso * talla²)
+      "frecuencia_de_cambio_de_posicion" : "number", //dynamic with history
+      "estado_basal_del_paciente" : "number", //dynamic with history and choosing [0-4]
+      "valoracion_del_estado_nutricional" : "number", //dynamic with history and choosing [0-3]
+      "portador_de" : "string", //dynamic with history and choosing [0-2]
+      "comorbilidad" : "[string]", //dynamic with history and choosing
+      "diagnostico" : "string", //dynamic with history and choosing
+      "examenes_de_laboratorio" : "[number]" //dynamic and history [[0.5,2.1,-1], [6,12,30], [1,-1,20]]
+
+    },
+
+    "historia_de_procedimiento_termografico" : {
+
+      "fecha_de_evaluacion_termografica" : "date", //static and historical
+      "zona_evaluada" : "number", //static and historical and choosing [>22]
+      "numero_de_fotos" : "number", //static and historical
+      "estadio_de_la_ulcera" : "number", //static and historical and choosing [0-4]
+      "escala_de_dolor" : "number", //static and historical and choosing [0-3]
+      "evolucion_de_la_ulcera" : "number", //static and historical and choosing [0-3]
+      "nombre_de_la_persona_que_realizo_las_imagenes" : "string", //static and historical
+      "ids_de_las_imagenes_infrarojas" : "[string]", //static and historical (for upload images)
+
+      "valoracion_de_braden" : { //static and historical
+
+        "percepsion_sensorial" : "number", //choosing [1-4]
+        "humedad" : "number", //choosing [1-4]
+        "nivel_de_actividad" : "number", //choosing [1-4]
+        "movilidad" : "number", //choosing [1-4]
+        "nutricion" : "number", //choosing [1-4]
+        "friccion_y_roce" : "number", //choosing [1-3]
+
+        "escala_final_de_riesgo" : "string" //calculate
+      },
+
+      "fecha_de_revaluacion_de_foto_termografica" : "date" //static and historical and automatic calculate
+    }
+
+  }
+}
+
+
+
+
+

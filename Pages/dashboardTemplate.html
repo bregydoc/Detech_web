@@ -66,7 +66,7 @@
         <h2 class="grey-text"> Lista de pacientes </h2>
         <ul class="collection collapsible ">
 
-
+            {{$idOfUser := .id}}
             {{ range .Patients }}
                 <li id="element{{.Dni}}">
                     <div class="collapsible-header">
@@ -83,9 +83,9 @@
 
                     </div>
                     <div class="collapsible-body right-align">
-                        <button class="btn-flat waves-effect">
+                        <a class="btn-flat waves-effect detailsPatient" id="btnDet{{.Dni}}" href="{{$idOfUser}}/patient/{{.Dni}}">
                             Detalles
-                        </button>
+                        </a>
                         <button class="btn red lighten-2 waves-effect deletePatient" id="btnRmv{{.Dni}}">
                             <i class="material-icons right">delete</i>
                             Eliminar

@@ -52,6 +52,9 @@ func main() {
 		hideLoader()
 
 		jQuery(".button-collapse").Call("sideNav")
+
+
+
 		jQuery(".deletePatient").Each(func (index int, btn interface{}) {
 			//btn.Attr("id")
 			btnJs := btn.(*js.Object)
@@ -64,8 +67,18 @@ func main() {
 				}()
 			})
 
+		})
 
+		jQuery(".detailsPatient").Each(func (index int, btn interface{}) {
+			//btn.Attr("id")
+			btnJs := btn.(*js.Object)
 
+			btnJs.Call("addEventListener", "click", func() {
+				go func() {
+					dni := btnJs.Get("id").String()[6:]
+					println(dni)
+				}()
+			})
 
 		})
 	})
