@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ .doctor}}</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <link rel="stylesheet" href="/Static/Styles/dashboardStyle.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+    <div id="id_of_user" class="{{.id}}"></div>
+    <nav class="cyan darken-1">
+        <div class="nav-wrapper">
+
+            <span href="#" class="hide-on-med-and-down titleToolbar brand-logo">Detech</span>
+            <span href="#" class="hide-on-large-only brand-logo">Detech</span>
+
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+                <li>
+                    <a href="/user/{{.id}}">
+                        <i class="material-icons right">list</i>
+                        Lista de pacientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#!">
+                        <i class="material-icons right">lock_open</i>
+                        Cerrar sesion
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="/user/{{.id}}">
+                        <i class="material-icons right">list</i>
+                        Lista de pacientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#!">
+                        <i class="material-icons right">lock_open</i>
+                        Cerrar sesion
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="progress loader">
+        <div class="indeterminate"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="grey-text"> Nuevo paciente</h2>
+
+        <div class="row">
+            <form class="col s10 offset-s1">
+                <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="nombre_completo" type="text" class="validate">
+                        <label for="nombre_completo">Nombre Completo</label>
+                    </div>
+
+                    <div class="input-field col s12 m6 l6">
+                        <i class="material-icons prefix">tab</i>
+                        <input id="dni" type="tel" class="validate">
+                        <label for="dni">DNI</label>
+                    </div>
+
+                    <div class="input-field col s12 m12 l12">
+                        <i class="material-icons prefix">phone</i>
+                        <input id="telefono" type="text" class="validate">
+                        <label for="telefono">Telefono</label>
+                    </div>
+
+                    <div class="input-field col s12 m12 l12">
+                        <i class="material-icons prefix">location_on</i>
+                        <input id="domicilio" type="text" class="validate">
+                        <label for="domicilio">Domicilio</label>
+                    </div>
+
+                    <div class="input-field col s12 m12 l12">
+                        <i class="material-icons prefix">add_circle</i>
+                        <input id="numero_de_hc" type="text" class="validate">
+                        <label for="numero_de_hc">Numero de historia clínica</label>
+                    </div>
+
+                    <div class="input-field col s12 m12 l12">
+                        Sexo:
+
+                            <input class="with-gap" name="sexo" type="radio" value="varon" id="male" />
+                            <label for="male">Hombre</label>
+
+                            <input class="with-gap" name="sexo" type="radio" value="mujer" id="female"/>
+                            <label for="female">Mujer</label>
+
+                    </div>
+
+
+                </div>
+                <div class="right-align">
+                    <div class="input-field btn-flat waves-effect right-align" id="btnResetForm">
+                        Limpiar campos
+                        <i class="material-icons left">close</i>
+                    </div>
+                    <div class="input-field btn waves-effect right-align cyan darken-2" id="btnSendNewPatient">
+                        Crear paciente
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <footer class="page-footer  grey lighten-4">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <!--<h5 class="white-text">Detech</h5>-->
+                    <img class="responsive-img" src="/Static/Images/logo_with_name_1.png">
+                    <!--<p class="grey-text text-lighten-4"></p>-->
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="grey-text text-darken-4">Desarrolladores:</h5>
+                    <ul>
+                        <li><a class="grey-text text-darken-2" href="#!">Bregy Malpartida Ramos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright grey-text text-darken-4">
+            <div class="container">
+                © 2016 Copyright Detech - BSD License
+                <a class="grey-text right" href="#!">Financiado por Ciencia activa</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div id="dialogUserCreated" class="modal">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/Public/newPatientScript.js"></script>
+</body>
+</html>
