@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;Detech_web&gt;">
+    <CLASSES>
+      <root url="file:///home/bregy/goLibraries/src/cloud.google.com" />
+      <root url="file:///home/bregy/goLibraries/src/google.golang.org" />
+      <root url="file:///home/bregy/goLibraries/src/honnef.co" />
+      <root url="file:///home/bregy/goLibraries/src/gopkg.in" />
+      <root url="file:///home/bregy/goLibraries/src/github.com" />
+      <root url="file:///home/bregy/goLibraries/src/golang.org" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file:///home/bregy/goLibraries/src/cloud.google.com" />
+      <root url="file:///home/bregy/goLibraries/src/google.golang.org" />
+      <root url="file:///home/bregy/goLibraries/src/honnef.co" />
+      <root url="file:///home/bregy/goLibraries/src/gopkg.in" />
+      <root url="file:///home/bregy/goLibraries/src/github.com" />
+      <root url="file:///home/bregy/goLibraries/src/golang.org" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>

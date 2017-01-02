@@ -1,2 +1,2 @@
-# Detech_web
-This the second intent creating detech web
+# Web app de control para usuarios y pacientes
+
