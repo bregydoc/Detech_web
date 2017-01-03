@@ -13,6 +13,7 @@
 </head>
 
 <body>
+<main>
     <div id="id_of_user" class="{{.id}}"></div>
     <nav class="cyan darken-1">
         <div class="nav-wrapper">
@@ -63,8 +64,8 @@
     </div>
 
     <div class="container">
-        <h2 class="grey-text"> Nuevo paciente</h2>
-
+        <h2 class="grey-text center-align"> NUEVO PACIENTE</h2>
+        <br><br>
         <div class="row">
             <form class="col s10 offset-s1">
                 <div class="row">
@@ -82,7 +83,7 @@
 
                     <div class="input-field col s12 m12 l12">
                         <i class="material-icons prefix">phone</i>
-                        <input id="telefono" type="text" class="validate">
+                        <input id="telefono" type="tel" class="validate">
                         <label for="telefono">Telefono</label>
                     </div>
 
@@ -94,7 +95,7 @@
 
                     <div class="input-field col s12 m12 l12">
                         <i class="material-icons prefix">add_circle</i>
-                        <input id="numero_de_hc" type="text" class="validate">
+                        <input id="numero_de_hc" type="tel" class="validate">
                         <label for="numero_de_hc">Numero de historia clínica</label>
                     </div>
 
@@ -124,6 +125,8 @@
             </form>
         </div>
     </div>
+
+</main>
 
     <footer class="page-footer  grey lighten-4">
         <div class="container">

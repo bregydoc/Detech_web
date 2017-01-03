@@ -58,37 +58,48 @@ type Patient struct {
 	HistoriaClinica []string `json:"historia_clinica"`
 }
 
-type ClinicHistory struct {
-	Of_patient                        string     `json:"of_patient"`
+type MinimClinicHistory struct {
 	Id                                string    `json:"id"`
-	Fecha_de_ingreso                  int64     `json:"fecha_de_ingreso"`
-	Numero_de_cama                    int64     `json:"numero_de_cama"`
-	Edad                              int64     `json:"edad"`
-	Peso                              float64   `json:"peso"`
-	Talla                             float64   `json:"talla"`
-	IMC                               float64   `json:"imc"`
-	Frecuencia_de_cambio_de_posicion  int64     `json:"frecuencia_de_cambio_de_posicion"`
-	Estado_basal                      int64     `json:"estado_basal"`
-	Valoracion_del_estado_nutricional int64     `json:"valoracion_del_estado_nutricional"`
-	Portador_de                       string    `json:"portador_de"`
-	Comorbilidad                      []string  `json:"comorbilidad"`
+	Fecha_de_ingreso                  string     `json:"fecha_de_ingreso"`
+	Numero_de_cama                    string     `json:"numero_de_cama"`
 	Diagnostico                       string    `json:"diagnostico"`
-	Examenes_de_laboratorio           [][]int64 `json:"examenes_de_laboratorio"`
+
 }
 
-func (p *Patient) createNewClinicHistory(
-	numeroCama int64,
-	edad int64,
-	peso float64,
-	talla float64,
-	fCPos int64,
-	estadoBasal int64,
-	valEstadoNutricional int64,
+
+type ClinicHistory struct {
+	Creador 						  string     `json:"creador"`
+	Of_patient                        string     `json:"of_patient"`
+	Id                                string     `json:"id"`
+	Fecha_de_ingreso                  string     `json:"fecha_de_ingreso"`
+	Numero_de_cama                    string     `json:"numero_de_cama"`
+	Edad                              string     `json:"edad"`
+	Peso                              string     `json:"peso"`
+	Talla                             string     `json:"talla"`
+	IMC                               string     `json:"imc"`
+	Frecuencia_de_cambio_de_posicion  string     `json:"frecuencia_de_cambio_de_posicion"`
+	Estado_basal                      string     `json:"estado_basal"`
+	Valoracion_del_estado_nutricional string     `json:"valoracion_del_estado_nutricional"`
+	Portador_de                       string     `json:"portador_de"`
+	Comorbilidad                      map[string]string  `json:"comorbilidad"`
+	Diagnostico                       string    `json:"diagnostico"`
+	Examenes_de_laboratorio           map[string]string`json:"examenes_de_laboratorio"`
+}
+
+func (user *User) createNewClinicHistory(
+	p Patient,
+	numeroCama string,
+	edad string,
+	peso string,
+	talla string,
+	fCPos string,
+	estadoBasal string,
+	valEstadoNutricional string,
 	portadorDe string,
-	comorbilidad []string,
+	comorbilidad map[string]string,
 	diagnostigo string,
-	examenesDeLaboratorio [][]int64,
-) *ClinicHistory {
+	examenesDeLaboratorio map[string]string,
+) (*ClinicHistory, error) {
 
 
 	fechaIngreso := time.Now()
@@ -97,10 +108,21 @@ func (p *Patient) createNewClinicHistory(
 	partOfId := fmt.Sprintf("%v%v%v%v%v%v", dia, mes, ano, hora, minuto, segundo)
 
 	id := p.Dni + partOfId
-	fechaIngresoFinal := fechaIngreso.Unix()
-	imc := float64(peso * (talla * talla))
+	fechaIngresoFinal := fechaIngreso.String()
+
+	pesoFloat, err := strconv.ParseFloat(peso, 64)
+	if err != nil {
+		return nil, err
+	}
+	tallaFloat, err := strconv.ParseFloat(talla, 64)
+	if err != nil {
+		return nil, err
+	}
+	imc := float64(pesoFloat * (tallaFloat * tallaFloat))
+	imcString := strconv.FormatFloat(imc, 'f', -1, 64)
 
 	c := &ClinicHistory{
+		user.Id,
 		p.Dni,
 		id,
 		fechaIngresoFinal,
@@ -108,7 +130,7 @@ func (p *Patient) createNewClinicHistory(
 		edad,
 		peso,
 		talla,
-		imc,
+		imcString,
 		fCPos,
 		estadoBasal,
 		valEstadoNutricional,
@@ -118,7 +140,7 @@ func (p *Patient) createNewClinicHistory(
 		examenesDeLaboratorio,
 	}
 
-	return c
+	return c, nil
 }
 /*
 func UploadAndAddClinicHistoryOfPatient(history *ClinicHistory) error {
@@ -159,12 +181,14 @@ func CreateNewPatient(dni string, nombre string, domicilio string, telefono stri
 	return &Patient{dni, nombre, domicilio, telefono, numeroDeHC, sexo, []string{}}
 }
 
-func GetPatientByDni(dni string) *Patient {
+func GetPatientByDni(dni string) (*Patient, error) {
 	urlForPatient := URL_PATIENTS + dni
 	ref := Firebase.NewReference(urlForPatient).Auth(AUTH_FIREBASE_TOKEN)
 	var p Patient
-	ref.Value(&p)
-	return &p
+	if err := ref.Value(&p); err != nil {
+		return nil, err
+	}
+	return &p, nil
 }
 
 func UploadPatientToDB(p *Patient) error {
@@ -251,7 +275,6 @@ func (user *User) CreateANewPatient(patient *Patient) error{
 
 	return nil
 }
-
 
 func (user *User) RemovePatient(dni string) error {
 	urlMinimPatient := URL_USERS + user.Id + "/patients/" + dni

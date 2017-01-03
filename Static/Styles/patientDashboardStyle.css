@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main {
+    flex: 1 0 auto;
+}
+
+.titleToolbar{
+    margin-left: 50px;
+}
+.loader{
+    margin-top: 0;
+}
+
+.collapsible-body{
+    padding: 20px;
+}
+
+.btnResetForm{
+    margin-left: 20px;
+}
+
+.informacionGeneral{
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.historiaClinica{
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+}

@@ -11,6 +11,9 @@ import (
 
 const TOKEN_AUTH  = "99524c616bc275d72b28c97f6c61b21669100621"
 
+var TheLoggedUser User
+
+
 func GetRouter() *gin.Engine{
 
 	s := gin.Default()
@@ -80,6 +83,7 @@ func GetRouter() *gin.Engine{
 		}else{
 			fmt.Println(user)
 			GetCurrentContext().RefreshDefaultContext(user)
+			TheLoggedUser = *user
 
 		}
 		c.HTML(http.StatusOK, "dashboardTemplate.html", gin.H{
@@ -99,6 +103,7 @@ func GetRouter() *gin.Engine{
 		}else{
 			fmt.Println(user)
 			GetCurrentContext().RefreshDefaultContext(user)
+			TheLoggedUser = *user
 
 		}
 		c.HTML(http.StatusOK, "createNewPatient.html", gin.H{
@@ -159,9 +164,39 @@ func GetRouter() *gin.Engine{
 	s.GET("/user/:id/patient/:dni", func(c *gin.Context) {
 		id := c.Param("id")
 		dniOfPatient := c.Param("dni")
+
+		patient, err := GetPatientByDni(dniOfPatient)
+
+
+		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+
+		log.Println(patient)
+
+
 		c.HTML(http.StatusOK, "patientDashboard.html", gin.H{
 			"id" : id,
-			"dni" : dniOfPatient,
+			"patient" : patient,
+		})
+	})
+
+	s.GET("/user/:id/patient/:dni/new_clinichistory", func(c *gin.Context) {
+		id := c.Param("id")
+		dniOfPatient := c.Param("dni")
+
+		patient, err := GetPatientByDni(dniOfPatient)
+
+		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+
+		//log.Println(patient)
+
+
+		c.HTML(http.StatusOK, "newClinicHistory.html", gin.H{
+			"id" : id,
+			"patient" : patient,
 		})
 	})
 

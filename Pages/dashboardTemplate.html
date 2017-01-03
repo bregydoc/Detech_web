@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 
     <link rel="stylesheet" href="/Static/Styles/dashboardStyle.css">
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 
 <body>
+
+<main>
     <div id="id_of_user" class="{{.id}}"></div>
     <nav class="cyan darken-1">
         <div class="nav-wrapper">
@@ -63,7 +66,8 @@
     </div>
 
     <div class="container">
-        <h2 class="grey-text"> Lista de pacientes </h2>
+        <h2 class="grey-text center-align"> LISTA DE PACIENTES </h2>
+        <br>
         <ul class="collection collapsible ">
 
             {{$idOfUser := .id}}
@@ -100,6 +104,7 @@
 
     </div>
 
+</main>
 
     <footer class="page-footer  grey lighten-4">
         <div class="container">
@@ -131,5 +136,6 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
     <script type="text/javascript" src="/Public/dashboardScript.js"></script>
+
 </body>
 </html>
