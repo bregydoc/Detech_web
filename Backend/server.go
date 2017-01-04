@@ -198,7 +198,9 @@ func GetRouter() *gin.Engine{
 			"id" : id,
 			"patient" : patient,
 		})
+
 	})
+
 
 
 	return s

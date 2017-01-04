@@ -136,7 +136,7 @@
         </div>
 
         <div class="container z-depth-2 historiaClinica hoverable">
-            <h4 class="grey-text center-align" style="padding-top: 30px;padding-bottom: 30px"> HISTORIA CLINICA </h4>
+            <h4 class="grey-text center-align" style="padding-top: 30px;padding-bottom: 30px"> FICHAS DE EVALUACIÓN </h4>
 
 
             {{if .patient.HistoriaClinica }}
@@ -148,7 +148,7 @@
             <div class="row right-align" style="padding-right: 20px; padding-bottom: 20px; margin-right: 5px">
                 <a class="btn-floating btn-large waves-effect waves-light red lighten-1 tooltipped btnAnadirHC"
                         href="{{.patient.Dni}}/new_clinichistory/"
-                        data-position="left" data-delay="30" data-tooltip="Añadir nueva historia clínica">
+                        data-position="left" data-delay="30" data-tooltip="Añadir nueva ficha de evalución">
                     <i class="material-icons">add</i>
                 </a>
             </div>
@@ -191,10 +191,12 @@
                     <!--<p class="grey-text text-lighten-4"></p>-->
                 </div>
                 <div class="col l4 offset-l2 s12">
+                    <!--
                     <h5 class="grey-text text-darken-4">Desarrolladores:</h5>
                     <ul>
                         <li><a class="grey-text text-darken-2" href="#!">Bregy Malpartida Ramos</a></li>
                     </ul>
+                    -->
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import (
 	"os"
 	"io"
 
+	"fmt"
 )
 
 
@@ -106,4 +107,8 @@ func DownloadImage(ctx context.Context, pathOfImageInStorage, localPath string) 
 
 }
 
+
+func UploadImageWithFile(ctx context.Context, file os.File) {
+	fmt.Println("En proceso...")
+}
 
