@@ -168,7 +168,7 @@ func UploadAndAddClinicHistoryOfPatient(history *ClinicHistory) error {
 }
 
 func addDniOfNewPatient(dni int64) {
-	ref := Firebase.NewReference(URL_DNIS_OF_PATIENTS).Auth(AUTH_FIREBASE_TOKEN)
+	ref := Firebase.NewReference(UR	L_DNIS_OF_PATIENTS).Auth(AUTH_FIREBASE_TOKEN)
 	var dnis []int64
 	ref.Value(&dnis)
 	fmt.Println("dni vector: ", dnis)
@@ -246,7 +246,6 @@ func GetUserById(id string) (*User, error) {
 	}
 	return &user, nil
 }
-
 
 func (user *User) CreateANewPatient(patient *Patient) error{
 	if strings.EqualFold(user.Id, "") {
