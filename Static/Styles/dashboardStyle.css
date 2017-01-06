@@ -21,3 +21,8 @@ main {
 .btnResetForm{
     margin-left: 20px;
 }
+
+.switch{
+    color: crimson;
+    padding-top: 100px;
+}

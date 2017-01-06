@@ -28,6 +28,11 @@ func main() {
 		jQuery(".button-collapse").Call("sideNav")
 		jQuery("select").Call("material_select")
 
+		jQuery(".datepicker").Call("pickadate", map[string]interface{}{
+			"selectMonths" : true,
+			"selectYears" : 15,
+		})
+
 	})
 
 

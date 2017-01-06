@@ -181,7 +181,7 @@ func GetRouter() *gin.Engine{
 		})
 	})
 
-	s.GET("/user/:id/patient/:dni/new_clinichistory", func(c *gin.Context) {
+	s.GET("/user/:id/patient/:dni/newevaluationfile", func(c *gin.Context) {
 		id := c.Param("id")
 		dniOfPatient := c.Param("dni")
 
@@ -194,7 +194,7 @@ func GetRouter() *gin.Engine{
 		//log.Println(patient)
 
 
-		c.HTML(http.StatusOK, "newClinicHistory.html", gin.H{
+		c.HTML(http.StatusOK, "newEvaluationFile.html", gin.H{
 			"id" : id,
 			"patient" : patient,
 		})
