@@ -22,5 +22,5 @@ Adjunto una imagen del avance de este tramo de la web.
 3. Añadidas funciones a bajo nivel para procesar las imágenes en el algoritmo del lado del servidor,
  iniciadas pruebas llamando desde Go a un script en python.
  
-
+    
 

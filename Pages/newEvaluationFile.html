@@ -73,19 +73,19 @@
                     <div class="col input-field l4 m6 s12">
                         <i class="material-icons prefix">poll</i>
                         <input id="peso" type="text" class="validate">
-                        <label for="peso">Peso</label>
+                        <label for="peso">Peso (Kg)</label>
                     </div>
 
                     <div class="col input-field l4 m6 s12">
                         <i class="material-icons prefix">format_list_numbered</i>
                         <input id="talla" type="text" class="validate">
-                        <label for="talla">Talla</label>
+                        <label for="talla">Talla (cm) </label>
                     </div>
 
                     <div class="col input-field l4 m6 s12">
                         <i class="material-icons prefix">date_range</i>
-                        <label for="hopData">Fecha de hospitalización</label>
-                        <input id="hopData" type="date" class="datepicker">
+                        <label for="hopDate">Fecha de hospitalización</label>
+                        <input id="hopDate" type="date" class="datepicker">
                     </div>
 
 
@@ -138,7 +138,7 @@
                         <br>
                         <label>
                             No
-                            <input type="checkbox">
+                            <input id="sonda_vesical" type="checkbox">
                             <span class="lever"></span>
                             Sí
                         </label>
@@ -152,7 +152,7 @@
                         <br>
                         <label>
                             No
-                            <input type="checkbox">
+                            <input id="portador_de_sng" type="checkbox">
                             <span class="lever"></span>
                             Sí
                         </label>
@@ -166,7 +166,7 @@
                         <br>
                         <label>
                             No
-                            <input type="checkbox">
+                            <input id="panal" type="checkbox">
                             <span class="lever"></span>
                             Sí
                         </label>
@@ -174,6 +174,40 @@
                         <br>
                     </div>
 
+
+                </div>
+
+                <div class="row">
+                    <div class="col input-field l4 m6 s12">
+                        <i class="material-icons prefix">note_add</i>
+                        <input id="albumina" type="text" class="validate">
+                        <label for="albumina">Albúmina sérica</label>
+                    </div>
+
+
+                    <div class="col input-field l4 m6 s12">
+                        <i class="material-icons prefix">note_add</i>
+                        <input id="examenSangre" type="text" class="validate">
+                        <label for="examenSangre">Exámen de sangre (bun)</label>
+                    </div>
+
+
+                    <div class="col input-field l4 m12 s12">
+                        <i class="material-icons prefix">note_add</i>
+                        <input id="creatinina" type="text" class="validate">
+                        <label for="creatinina">Creatinina</label>
+                    </div>
+                </div>
+
+
+                <div class="row right-align">
+                    <div class="input-field btn-flat waves-effect right-align" id="btnResetForm">
+                        Limpiar campos
+                        <i class="material-icons left">close</i>
+                    </div>
+                    <div class="input-field btn waves-effect right-align cyan darken-2" id="btnCreateEvaluationFile">
+                        GUARDAR REGISTRO
+                    </div>
 
                 </div>
 

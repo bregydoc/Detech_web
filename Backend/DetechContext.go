@@ -1,8 +1,7 @@
 package main
 
-
 type DetechContext struct {
-	LoggedUser User
+	LoggedUser     User
 	IsDoctorLogged bool
 }
 
@@ -20,7 +19,7 @@ func (c *DetechContext) RefreshDefaultContext(user *User) {
 	if user.Id != "" {
 		c.LoggedUser.Id = user.Id
 		c.IsDoctorLogged = true
-	}else{
+	} else {
 		c.IsDoctorLogged = false
 	}
 

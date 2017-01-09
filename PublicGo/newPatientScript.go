@@ -1,16 +1,14 @@
 package main
 
 import (
-
-	_"github.com/gopherjs/gopherjs/js"
-	"github.com/gopherjs/jquery"
 	"github.com/gopherjs/gopherjs/js"
+	_ "github.com/gopherjs/gopherjs/js"
+	"github.com/gopherjs/jquery"
 )
 
-const TOKEN_AUTH  = "99524c616bc275d72b28c97f6c61b21669100621"
+const TOKEN_AUTH = "99524c616bc275d72b28c97f6c61b21669100621"
 
 var jQuery = jquery.NewJQuery
-
 
 func showLoader() {
 	jQuery(".loader").Show()
@@ -19,7 +17,6 @@ func showLoader() {
 func hideLoader() {
 	jQuery(".loader").Hide()
 }
-
 
 func main() {
 
@@ -46,7 +43,6 @@ func main() {
 
 	})
 
-
 	btnCreatePatient.On(jquery.CLICK, func(e jquery.Event) {
 		//println("Submit")
 
@@ -57,18 +53,16 @@ func main() {
 		hc := jQuery("#numero_de_hc").Val()
 		sex := jQuery("input:radio[name ='sexo']:checked").Val()
 
-
 		//Falta verificación de fidelidad de datos
 		//... Espacio reservado ...
 		showLoader()
 		jquery.Post("new_patient/submit", map[string]string{
-			"dni": dni,
-			"name":name,
-			"address":address,
-			"phone":phone,
+			"dni":     dni,
+			"name":    name,
+			"address": address,
+			"phone":   phone,
 			"numOfHC": hc,
-			"sex" : sex,
-
+			"sex":     sex,
 		}).Done(func(data jquery.Deferred) {
 			jQuery("#dialogUserCreated").Call("modal", "open")
 			materialize.Call("toast", "Usuario creado con exito!", 5000, "", func() {
@@ -79,7 +73,6 @@ func main() {
 			println("Failed!")
 
 		})
-
 
 	})
 }

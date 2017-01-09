@@ -1,11 +1,12 @@
 package main
 
 import (
-	"strings"
 	"fmt"
-	"regexp"
 	"math/rand"
+	"regexp"
 	"strconv"
+	"strings"
+	"time"
 )
 
 const (
@@ -82,6 +83,7 @@ func parseLength(s string) (int, error) {
 }
 
 func GenerateNewId(template string) (string, error) {
+	rand.Seed(int64(time.Now().Nanosecond()))
 	result := template
 	generatorsExp, _ := regexp.Compile(`\[([a-zA-Z0-9\-\\]+)\](\{([0-9]+)\})`)
 	matches := generatorsExp.FindAllStringIndex(template, -1)
@@ -97,3 +99,4 @@ func GenerateNewId(template string) (string, error) {
 	}
 	return result, nil
 }
+

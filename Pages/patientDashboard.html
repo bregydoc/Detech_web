@@ -139,7 +139,7 @@
             <h4 class="grey-text center-align" style="padding-top: 30px;padding-bottom: 30px"> FICHAS DE EVALUACIÓN </h4>
 
 
-            {{if .patient.HistoriaClinica }}
+            {{if .patient.EvaluationFile }}
 
             {{else}}
                 <div class="row center-align"><h5 class="grey-text flow-text"> No se encontraron registros</h5></div>
@@ -147,7 +147,7 @@
 
             <div class="row right-align" style="padding-right: 20px; padding-bottom: 20px; margin-right: 5px">
                 <a class="btn-floating btn-large waves-effect waves-light red lighten-1 tooltipped btnAnadirHC"
-                        href="{{.patient.Dni}}/newevaluationfile/"
+                        href="{{.patient.Dni}}/new-evaluation-file/"
                         data-position="left" data-delay="30" data-tooltip="Añadir nueva ficha de evalución">
                     <i class="material-icons">add</i>
                 </a>

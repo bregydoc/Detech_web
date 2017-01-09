@@ -1,23 +1,22 @@
 package main
 
 import (
-	"io/ioutil"
-	"golang.org/x/net/context"
 	"cloud.google.com/go/storage"
-	
-	"log"
-	"time"
-	"os"
+	"golang.org/x/net/context"
+	"io/ioutil"
+
 	"io"
+	"log"
+	"os"
+	"time"
 
 	"fmt"
 )
 
-
 func UploadFileToBucket(ctx context.Context, pathOfImage string, bucket *storage.BucketHandle, finalName string) error {
-	
+
 	rawData, err := ioutil.ReadFile(pathOfImage)
-	
+
 	if err != nil {
 		return err
 	}
@@ -29,10 +28,10 @@ func UploadFileToBucket(ctx context.Context, pathOfImage string, bucket *storage
 	}
 	t1 := time.Now()
 	writer.Close()
-	t2 := time.Now();
+	t2 := time.Now()
 	log.Printf("Uploaded %v bytes in %v seconds", n, (t2.Sub(t1)).Seconds())
 	return nil
-	
+
 }
 
 func DownloadFileFromBucket(ctx context.Context, pathOfImageInBucket string, bucket *storage.BucketHandle, pathForImage string) error {
@@ -45,13 +44,12 @@ func DownloadFileFromBucket(ctx context.Context, pathOfImageInBucket string, buc
 
 	rawData := make([]byte, reader.Size())
 
-
 	if err != nil {
 		return err
 	}
-	defer func () {
+	defer func() {
 		reader.Close()
-		t2 = time.Now();
+		t2 = time.Now()
 		log.Printf("Downloaded %v bytes in %v seconds", reader.Size(), (t2.Sub(t1)).Seconds())
 
 	}()
@@ -65,9 +63,8 @@ func DownloadFileFromBucket(ctx context.Context, pathOfImageInBucket string, buc
 	}
 
 	return nil
-	
-}
 
+}
 
 func UploadImage(ctx context.Context, pathOfImage, finalPathInStorage string) error {
 	client, err := storage.NewClient(ctx)
@@ -107,8 +104,6 @@ func DownloadImage(ctx context.Context, pathOfImageInStorage, localPath string) 
 
 }
 
-
 func UploadImageWithFile(ctx context.Context, file os.File) {
 	fmt.Println("En proceso...")
 }
-
