@@ -133,6 +133,8 @@ func GetRouter() *gin.Engine {
 		c.String(http.StatusOK, "ok")
 	})
 
+
+	/////////////////////////////////////////////////// A P I /////////////////////////////////////////////////////
 	s.POST("api/patients/remove/", func(c *gin.Context) {
 		token := c.PostForm("token")
 		userId := c.PostForm("userId")
@@ -158,6 +160,33 @@ func GetRouter() *gin.Engine {
 		}
 	})
 
+	s.POST("api/evaluation-file/remove", func (c * gin.Context){
+		token := c.PostForm("token")
+		userId := c.PostForm("userId")
+		dni := c.PostForm("dni")
+
+		idOfEvalFile := c.PostForm("idOfEvalFile")
+
+		if token != TOKEN_AUTH {
+			c.String(http.StatusNotAcceptable, "No access")
+		} else {
+			user, err := GetUserById(userId)
+
+			if err != nil {
+				c.Error(err)
+				return
+			}
+
+			err = user.RemoveEvaluationFile(dni, idOfEvalFile)
+
+			if err != nil {
+				c.Error(err)
+				return
+			}
+
+		}
+	})
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	s.GET("/user/:id/patient/:dni", func(c *gin.Context) {
 		id := c.Param("id")
 		dniOfPatient := c.Param("dni")

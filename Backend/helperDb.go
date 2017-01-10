@@ -58,12 +58,6 @@ type Patient struct {
 	EvaluationFile  map[string]MinimEvaluationFile `json:"evaluation_file"`
 }
 
-type MinimClinicHistory struct {
-	Id               string `json:"id"`
-	Fecha_de_ingreso string `json:"fecha_de_ingreso"`
-	Numero_de_cama   string `json:"numero_de_cama"`
-	Diagnostico      string `json:"diagnostico"`
-}
 
 type ClinicHistory struct {
 	Creador                           string            `json:"creador"`
@@ -165,7 +159,7 @@ func (user *User) NewEvaluationFile(
 
 	imc := strconv.FormatFloat((fPeso / (fTalla * fTalla)), 'f', 3, 64)
 
-	//Falta el cálculo automatico de la edad, falta añadir campo fecha de naciemiento en la informacion primaria del paciente
+	//Falta el cálculo automatico de la edad, falta añadir campo fecha de nacimiento en la informacion primaria del paciente
 	//patient, err := GetPatientByDni(dniDelPaciente)if err != nil {
 	//	return nil, err
 	//}
@@ -177,7 +171,7 @@ func (user *User) NewEvaluationFile(
 		dniDelPaciente,
 		user.Id,
 		GeneralInformation{
-			time.Now().String(),
+			time.Now().Format("2006-01-02 15:04:05"),
 			edad,
 			talla,
 			peso,
@@ -383,3 +377,38 @@ func (user *User) RemovePatient(dni string) error {
 
 	return nil
 }
+
+func (user *User) GetEvaluationFileById(id string) (*EvaluationFile, error) {
+	var evaluationFile EvaluationFile
+
+	urlGlobalEvaluationFile := URL_EVALUATION_FILES + id
+
+	refGlobal := Firebase.NewReference(urlGlobalEvaluationFile).Auth(AUTH_FIREBASE_TOKEN)
+
+	err := refGlobal.Value(&evaluationFile)
+	if err != nil {
+		return nil, err
+	}
+	return &evaluationFile, nil
+
+}
+
+
+func (user *User) RemoveEvaluationFile(dniOfPatient, id string) error {
+	urlMinimEvalFileSavedInPatient := URL_PATIENTS + dniOfPatient + "/evaluation_file/" + id
+	urlGlobalEvaluationFile := URL_EVALUATION_FILES + id
+
+	refMinim := Firebase.NewReference(urlMinimEvalFileSavedInPatient).Auth(AUTH_FIREBASE_TOKEN)
+	refGlobal := Firebase.NewReference(urlGlobalEvaluationFile).Auth(AUTH_FIREBASE_TOKEN)
+
+	err := refMinim.Delete()
+	if err != nil {
+		return err
+	}
+	err = refGlobal.Delete()
+	if err != nil {
+		return err
+	}
+	return nil	
+}
+

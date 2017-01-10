@@ -14,7 +14,10 @@
 
 <body>
     <main>
+
         <div id="id_of_user" class="{{.id}}"></div>
+        <div id="dni_of_patient" class="{{.patient.Dni}}"></div>
+
         <nav class="cyan darken-1">
             <div class="nav-wrapper">
 
@@ -31,6 +34,7 @@
                             Lista de pacientes
                         </a>
                     </li>
+
 
                     <li>
                         <a href="{{.id}}/new_patient">
@@ -140,6 +144,40 @@
 
 
             {{if .patient.EvaluationFile }}
+                {{$idOfUser := .id}}
+                {{$dniOfPatient := .patient.Dni}}
+                <ul class="collection collapsible ">
+
+                    {{ range .patient.EvaluationFile }}
+                        <li id="element{{.Id}}">
+                            <div class="collapsible-header">
+                                <div class="collection-item avatar">
+                                    <i class="material-icons circle teal lighten-1">perm_identity</i>
+                                    <span class="title grey-text text-darken-4">
+                                        Ficha del {{ .Informacion_General.Fecha}}
+                                    </span>
+                                    <p class="grey-text">
+
+                                    </p>
+                                </div>
+
+
+                            </div>
+                            <div class="collapsible-body right-align">
+                                <a class="btn-flat waves-effect detailsPatient" id="btnDet{{.Id}}" href="{{$idOfUser}}/patient/{{.Id}}">
+                                    Detalles
+                                </a>
+                                <button class="btn red lighten-2 waves-effect deleteEvaluationFile" id="btnRmv{{.Id}}">
+                                    <i class="material-icons right">delete</i>
+                                    Eliminar
+
+                                </button>
+                            </div>
+                        </li>
+
+                    {{ end }}
+                </ul>
+
 
             {{else}}
                 <div class="row center-align"><h5 class="grey-text flow-text"> No se encontraron registros</h5></div>
