@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ .doctor}}</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+
+    <link rel="stylesheet" href="/Static/Styles/patientDashboardStyle.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+<main>
+
+    <div id="id_of_user" class="{{.id}}"></div>
+    <div id="dni_of_patient" class="{{.patient.Dni}}"></div>
+
+    <nav class="cyan darken-1">
+        <div class="nav-wrapper">
+
+            <span href="#" class="hide-on-med-and-down titleToolbar brand-logo">Detech</span>
+            <span href="#" class="hide-on-large-only brand-logo">Detech</span>
+
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+
+                <li>
+                    <a href="/user/{{.id}}">
+                        <i class="material-icons right">list</i>
+                        Lista de pacientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/user/{{.id}}/patient/{{.dni}}">
+                        <i class="material-icons right">account_circle</i>
+                        Información del paciente
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#!">
+                        <i class="material-icons right">lock_open</i>
+                        Cerrar sesion
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li>
+                    <a href="/user/{{.id}}">
+                        <i class="material-icons right">list</i>
+                        Lista de pacientes
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/user/{{.id}}/patient/{{.patient.Dni}}">
+                        <i class="material-icons right">account_circle</i>
+                        Información del paciente
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#!">
+                        <i class="material-icons right">lock_open</i>
+                        Cerrar sesion
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="progress loader">
+        <div class="indeterminate"></div>
+    </div>
+
+    <div class="container z-depth-1 hoverable informacionDeFicha">
+        <div class="row" style="padding-top: 30px; padding-bottom: 30px">
+            <div class="col s12 m12 l12 center-align">
+                <span class="flow-text">Ficha de evaluación creada por {{.user.Name}} {{.user.LastName}} el {{.evaluationFile.GInformation.Fecha}}</span>
+            </div>
+        </div>
+
+        <div class="row center-align">
+
+            <div class="col l2 s12 m2 offset-l1 offset-m1" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">cake</i>
+                    <h6 class="grey-text ">Edad</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.GInformation.Edad}}</h6>
+            </div>
+
+            <div class="col l2 s12 m2" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">accessibility</i>
+                    <h6 class="grey-text ">Talla</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.GInformation.Talla}}</h6>
+            </div>
+
+            <div class="col l2 s12 m2" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">face</i>
+                    <h6 class="grey-text ">Peso</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.GInformation.Peso}}</h6>
+            </div>
+
+            <div class="col l2 s12 m2" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">assignment</i>
+                    <h6 class="grey-text ">IMC</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.GInformation.IMC}}</h6>
+            </div>
+
+            <div class="col l2 s12 m2" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">alarm_add</i>
+                    <h6 class="grey-text ">Fecha de hospitalización</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.GInformation.Fecha_de_hospitalizacion}}</h6>
+            </div>
+
+
+
+        </div>
+
+        <div class="row center-align">
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">loop</i>
+                    <h6 class="grey-text ">Frecuencia de cambio de posición</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.MoreInformation.Frecuencia_de_cambio_de_posicion}} veces al día</h6>
+            </div>
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">hotel</i>
+                    <h6 class="grey-text ">Estado basal del paciente</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">
+                    <!-- Modificar a punta de if para las opciones seleccionadas-->
+                    {{if eq .evaluationFile.MoreInformation.Estado_basal_de_la_posicion_del_paciente  "Opcion2"}}
+                    La opción elegida es la 2
+                    {{else}}
+                    Nimergas
+                    {{end}}
+                </h6>
+            </div>
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">menu</i>
+                    <h6 class="grey-text ">Estádo nutricional</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.MoreInformation.Estado_nutricional_por_valoracion_global_subjetiva}}</h6>
+            </div>
+
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">panorama_fish_eye</i>
+                    <h6 class="grey-text ">Portador de sonda vesical</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">
+                    <!-- Modificar a punta de if para las opciones seleccionadas-->
+                    {{if eq .evaluationFile.ExtraMoreInformation.Portador_de_sonda_vesical  "true"}}
+                    Si
+                    {{else}}
+                    No
+                    {{end}}
+                </h6>
+            </div>
+
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">panorama_horizontal</i>
+                    <h6 class="grey-text ">Portador de SNG</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">
+                    <!-- Modificar a punta de if para las opciones seleccionadas-->
+                    {{if eq .evaluationFile.ExtraMoreInformation.Portador_de_SNG  "true"}}
+                    Si
+                    {{else}}
+                    No
+                    {{end}}
+                </h6>
+            </div>
+
+            <div class="col l2 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">priority_high</i>
+                    <h6 class="grey-text ">Portador de pañal</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">
+                    <!-- Modificar a punta de if para las opciones seleccionadas-->
+                    {{if eq .evaluationFile.ExtraMoreInformation.Panal  "true"}}
+                    Si
+                    {{else}}
+                    No
+                    {{end}}
+                </h6>
+            </div>
+
+        </div>
+
+        <div class="row center-align">
+            <div class="col l4 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">assessment</i>
+                    <h6 class="grey-text ">Abumina sérica</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.ExtraMoreInformation.Albumina_serica}}</h6>
+            </div>
+
+            <div class="col l4 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">opacity</i>
+                    <h6 class="grey-text ">Exámen de sangre de nitrógeno úrico</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.ExtraMoreInformation.Examen_de_sangre_de_nitrogeno_urico}}</h6>
+            </div>
+
+            <div class="col l4 s12 m4" style="padding-top: 30px">
+                <div class="row">
+                    <i class="material-icons small">help_outline</i>
+                    <h6 class="grey-text ">Creatinina</h6>
+                </div>
+                <h6 class="grey-text text-darken-2">{{.evaluationFile.ExtraMoreInformation.Creatinina}}</h6>
+            </div>
+
+            <!--  FALTA EL CAMPO DE Ulcera_previa -->
+        </div>
+        <br>
+        <div class="row right-align">
+            <div class="col l5 m9 offset-l7 offset-m3">
+
+                <button class="waves-effect waves-light btn" id="addTherm{{.evaluationFile.Id}}">
+                <i class="material-icons left">party_mode</i>
+                    NUEVO HISTORIAL TERMOGRÁFICO
+                </button>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>
+
+
+
+<footer class="page-footer grey lighten-4">
+    <div class="container">
+        <div class="row">
+            <div class="col l4 s12 offset-l1 center-align">
+                <!--<h5 class="white-text">Detech</h5>-->
+                <img class="responsive-img" src="/Static/Images/logo_with_name_1.png">
+                <!--<p class="grey-text text-lighten-4"></p>-->
+
+            </div>
+            <div class="col l3 s12 grey-text">
+                Dispositivo biomédico
+                portable, ergonómico,
+                de fácil uso, orientado
+                para la prevención
+                de UPP  en pacientes
+                en riesgo.
+                Permitiendo mejorar la
+                calidad de vida del paciente,
+                reducir los costos hospitalarios
+                y reducir las demandas por mala
+                praxis hospitalaria.
+                <!--
+                <h5 class="grey-text text-darken-4">Desarrolladores:</h5>
+                <ul>
+                    <li><a class="grey-text text-darken-2" href="#!">Bregy Malpartida Ramos</a></li>
+                </ul>
+                -->
+            </div>
+
+            <div class="col l3 s12 ">
+                Contacto:
+                El polo 1074 Dpto 302 B, Surco, Lima
+
+                Chief Operating Officer
+                @: management@detech.cc
+                Síguenos
+
+                <div class="row valign-wrapper">
+                    <div class="col l2 valign">
+                        <img class="responsive-img" src="https://www.thekirstyclub.com/assets/images/icon-facebook.svg">
+                    </div>
+                    <div class="col l10 valign">
+                        https://www.facebook.com/detech.cc/
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright grey-text text-darken-4">
+        <div class="container">
+            © 2016 Copyright Detech - BSD License
+            <a class="grey-text right" href="#!">Financiado por Ciencia activa</a>
+        </div>
+    </div>
+</footer>
+
+
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script type="text/javascript" src="/Public/evaluationFileScript.js"></script>
+
+</body>
+</html>

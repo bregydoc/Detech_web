@@ -99,4 +99,3 @@ func GenerateNewId(template string) (string, error) {
 	}
 	return result, nil
 }
-

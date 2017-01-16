@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/gopherjs/gopherjs/js"
 	_ "github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
-	"github.com/gopherjs/gopherjs/js"
 
 	"strconv"
 )
@@ -13,7 +13,7 @@ const TOKEN_AUTH = "99524c616bc275d72b28c97f6c61b21669100621"
 var jQuery = jquery.NewJQuery
 var materialize = js.Global.Get("Materialize")
 
-func showToast(message string, callback func()){
+func showToast(message string, callback func()) {
 	materialize.Call("toast", message, 5000, "", callback)
 }
 
@@ -41,7 +41,7 @@ func main() {
 			"selectYears":  100,
 		})
 
-		btnCreate.On(jquery.CLICK, func( e jquery.Event) {
+		btnCreate.On(jquery.CLICK, func(e jquery.Event) {
 			peso := jQuery("#peso").Val()
 			talla := jQuery("#talla").Val()
 			hopDate := jQuery("#hopDate").Val()
@@ -57,20 +57,18 @@ func main() {
 
 			showLoader()
 			jquery.Post("new-evaluation-file/submit", map[string]string{
-				"peso":     peso,
-				"talla":    talla,
-				"hopDate": hopDate,
-				"estadoBasal":   estadoBasal,
-				"estadoNutricional": estadoNutricional,
-				"frequeciaCambioPos":     frequeciaCambioPos,
-				"sondaVesical":     strconv.FormatBool(sondaVesical),
-				"portadorSNG":    strconv.FormatBool(portadorSNG),
-				"panal": strconv.FormatBool(panal),
-				"albumina":   albumina,
-				"examenSangre": examenSangre,
-				"creatinina":     creatinina,
-
-
+				"peso":               peso,
+				"talla":              talla,
+				"hopDate":            hopDate,
+				"estadoBasal":        estadoBasal,
+				"estadoNutricional":  estadoNutricional,
+				"frequeciaCambioPos": frequeciaCambioPos,
+				"sondaVesical":       strconv.FormatBool(sondaVesical),
+				"portadorSNG":        strconv.FormatBool(portadorSNG),
+				"panal":              strconv.FormatBool(panal),
+				"albumina":           albumina,
+				"examenSangre":       examenSangre,
+				"creatinina":         creatinina,
 			}).Done(func(data jquery.Deferred) {
 				jQuery("#dialogUserCreated").Call("modal", "open")
 				showToast("Historia clínica creada", func() {

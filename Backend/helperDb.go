@@ -58,7 +58,6 @@ type Patient struct {
 	EvaluationFile  map[string]MinimEvaluationFile `json:"evaluation_file"`
 }
 
-
 type ClinicHistory struct {
 	Creador                           string            `json:"creador"`
 	Of_patient                        string            `json:"of_patient"`
@@ -78,8 +77,37 @@ type ClinicHistory struct {
 	Examenes_de_laboratorio           map[string]string `json:"examenes_de_laboratorio"`
 }
 
+type ThermalUPPImage struct {
+	Id string `json:"id"`
+
+	NombreDelArchivo string `json:"nombre_del_archivo"`
+
+	PresentaUPP bool `json:"presenta_upp"`
+
+	Escala_de_dolor        string `json:"escala_de_dolor"`
+	Evolución_de_la_úlcera string `json:"evolución_de_la_úlcera"`
+	Forma                  string `json:"forma"`
+	Ancho                  string `json:"ancho"`
+	Largo                  string `json:"largo"`
+	Numero_de_imagen       string `json:"numero_de_imagen"`
+
+	Percepcion_sensorial string `json:"percepcion_sensorial"`
+	Humedad              string `json:"humedad"`
+	Actividad            string `json:"actividad"`
+	Movilidad            string `json:"movilidad"`
+	Alimentación         string `json:"alimentación"`
+	Fricción             string `json:"fricción"`
+}
+
+
 type ThermalHistory struct {
 	Id string `json:"id"`
+
+	Zona                 string `json:"zona"`
+	Numero_de_fotos      string `json:"numero_de_fotos"`
+	Estadío_de_la_ulcera string `json:"estadío_de_la_ulcera"`
+
+	FotosTermograficas map[string]ThermalUPPImage
 }
 
 type GeneralInformation struct {
@@ -157,14 +185,18 @@ func (user *User) NewEvaluationFile(
 
 	fPeso, err := strconv.ParseFloat(peso, 64)
 
-	imc := strconv.FormatFloat((fPeso / (fTalla * fTalla)), 'f', 3, 64)
+	tallaParaCalculoDeImc := fTalla
+
+	if fTalla > 3.0 { //La talla está en centimetros
+		tallaParaCalculoDeImc = fTalla / 100.0
+	}
+	imc := strconv.FormatFloat((fPeso / (tallaParaCalculoDeImc * tallaParaCalculoDeImc)), 'f', 3, 64)
 
 	//Falta el cálculo automatico de la edad, falta añadir campo fecha de nacimiento en la informacion primaria del paciente
 	//patient, err := GetPatientByDni(dniDelPaciente)if err != nil {
 	//	return nil, err
 	//}
 	edad := "20"
-
 
 	return &EvaluationFile{
 		id,
@@ -197,7 +229,7 @@ func (user *User) NewEvaluationFile(
 
 }
 
-func (evaluationFile *EvaluationFile) UploadToFirebase() error{
+func (evaluationFile *EvaluationFile) UploadToFirebase() error {
 
 	//Add new eval file on patient field, the minimum data ///////////////////////////////////
 	minimEvalFile := MinimEvaluationFile{evaluationFile.Id,
@@ -215,12 +247,11 @@ func (evaluationFile *EvaluationFile) UploadToFirebase() error{
 	//////////////////////////////////////////////////////////////////////////////////////////
 	//Add completely evaluation file to exactly eval node
 
-	refOfEvaluationFile := Firebase.NewReference(URL_EVALUATION_FILES+evaluationFile.Id).Auth(AUTH_FIREBASE_TOKEN)
+	refOfEvaluationFile := Firebase.NewReference(URL_EVALUATION_FILES + evaluationFile.Id).Auth(AUTH_FIREBASE_TOKEN)
 	err = refOfEvaluationFile.Write(&evaluationFile)
 	if err != nil {
 		return err
 	}
-
 
 	return nil
 }
@@ -393,7 +424,6 @@ func (user *User) GetEvaluationFileById(id string) (*EvaluationFile, error) {
 
 }
 
-
 func (user *User) RemoveEvaluationFile(dniOfPatient, id string) error {
 	urlMinimEvalFileSavedInPatient := URL_PATIENTS + dniOfPatient + "/evaluation_file/" + id
 	urlGlobalEvaluationFile := URL_EVALUATION_FILES + id
@@ -409,6 +439,5 @@ func (user *User) RemoveEvaluationFile(dniOfPatient, id string) error {
 	if err != nil {
 		return err
 	}
-	return nil	
+	return nil
 }
-

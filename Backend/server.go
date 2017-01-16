@@ -24,6 +24,8 @@ func GetRouter() *gin.Engine {
 
 	ctx := context.Background()
 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////// A P I /////////////////////////////////////////////////////
 	s.POST("/api/upload/user/:name", func(c *gin.Context) {
 
 		token := c.PostForm("token")
@@ -70,71 +72,6 @@ func GetRouter() *gin.Engine {
 
 	})
 
-	s.GET("/user/:id", func(c *gin.Context) {
-		id := c.Param("id")
-		//Actualiza el contexto (El doctor que esta actualmente usando el servicio)
-		//Desconosco el comportamiento que tendrá al ser concurrente y con múltiples conexiones
-		user, err := GetUserById(id)
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println(user)
-			GetCurrentContext().RefreshDefaultContext(user)
-			TheLoggedUser = *user
-
-		}
-		c.HTML(http.StatusOK, "dashboardTemplate.html", gin.H{
-			"id":       id,
-			"doctor":   user.Name + " " + user.LastName,
-			"Patients": user.Patients,
-		})
-	})
-
-	s.GET("/user/:id/new_patient", func(c *gin.Context) {
-		id := c.Param("id")
-
-		user, err := GetUserById(id)
-
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println(user)
-			GetCurrentContext().RefreshDefaultContext(user)
-			TheLoggedUser = *user
-
-		}
-		c.HTML(http.StatusOK, "createNewPatient.html", gin.H{
-			"id":       id,
-			"doctor":   user.Name + " " + user.LastName,
-			"Patients": user.Patients,
-		})
-	})
-
-	s.POST("/user/:id/new_patient/submit", func(c *gin.Context) {
-		id := c.Param("id")
-		//dni := c.PostForm("dni")
-		//Check if the patient already exist
-
-		dni := c.PostForm("dni")
-		nombre := c.PostForm("name")
-		domicilio := c.PostForm("address")
-		telefono := c.PostForm("phone")
-		numero_de_HC := c.PostForm("numOfHC")
-		sexo := c.PostForm("sex")
-
-		newPatient := CreateNewPatient(dni, nombre, domicilio, telefono, numero_de_HC, sexo)
-		currentUser, err := GetUserById(id)
-		if err != nil {
-			c.String(http.StatusInternalServerError, "Id de usuario no encontrado")
-		}
-
-		currentUser.CreateANewPatient(newPatient)
-
-		c.String(http.StatusOK, "ok")
-	})
-
-
-	/////////////////////////////////////////////////// A P I /////////////////////////////////////////////////////
 	s.POST("api/patients/remove/", func(c *gin.Context) {
 		token := c.PostForm("token")
 		userId := c.PostForm("userId")
@@ -160,7 +97,7 @@ func GetRouter() *gin.Engine {
 		}
 	})
 
-	s.POST("api/evaluation-file/remove", func (c * gin.Context){
+	s.POST("api/evaluation-file/remove", func(c *gin.Context) {
 		token := c.PostForm("token")
 		userId := c.PostForm("userId")
 		dni := c.PostForm("dni")
@@ -187,41 +124,28 @@ func GetRouter() *gin.Engine {
 		}
 	})
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	s.GET("/user/:id/patient/:dni", func(c *gin.Context) {
+
+	s.POST("/user/:id/new_patient/submit", func(c *gin.Context) {
 		id := c.Param("id")
-		dniOfPatient := c.Param("dni")
+		//dni := c.PostForm("dni")
+		//Check if the patient already exist
 
-		patient, err := GetPatientByDni(dniOfPatient)
+		dni := c.PostForm("dni")
+		nombre := c.PostForm("name")
+		domicilio := c.PostForm("address")
+		telefono := c.PostForm("phone")
+		numero_de_HC := c.PostForm("numOfHC")
+		sexo := c.PostForm("sex")
 
+		newPatient := CreateNewPatient(dni, nombre, domicilio, telefono, numero_de_HC, sexo)
+		currentUser, err := GetUserById(id)
 		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
+			c.String(http.StatusInternalServerError, "Id de usuario no encontrado")
 		}
 
-		log.Println(patient)
+		currentUser.CreateANewPatient(newPatient)
 
-		c.HTML(http.StatusOK, "patientDashboard.html", gin.H{
-			"id":      id,
-			"patient": patient,
-		})
-	})
-
-	s.GET("/user/:id/patient/:dni/new-evaluation-file", func(c *gin.Context) {
-		id := c.Param("id")
-		dniOfPatient := c.Param("dni")
-
-		patient, err := GetPatientByDni(dniOfPatient)
-
-		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error())
-		}
-
-		//log.Println(patient)
-
-		c.HTML(http.StatusOK, "newEvaluationFile.html", gin.H{
-			"id":      id,
-			"patient": patient,
-		})
-
+		c.String(http.StatusOK, "ok")
 	})
 
 	s.POST("/user/:id/patient/:dni/new-evaluation-file/submit", func(c *gin.Context) {
@@ -282,7 +206,106 @@ func GetRouter() *gin.Engine {
 			c.String(http.StatusInternalServerError, err.Error())
 		}
 
+	})
 
+	s.GET("/user/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		//Actualiza el contexto (El doctor que esta actualmente usando el servicio)
+		//Desconosco el comportamiento que tendrá al ser concurrente y con múltiples conexiones
+		user, err := GetUserById(id)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(user)
+			GetCurrentContext().RefreshDefaultContext(user)
+			TheLoggedUser = *user
+
+		}
+		c.HTML(http.StatusOK, "dashboardTemplate.html", gin.H{
+			"id":       id,
+			"doctor":   user.Name + " " + user.LastName,
+			"Patients": user.Patients,
+		})
+	})
+
+	s.GET("/user/:id/new_patient", func(c *gin.Context) {
+		id := c.Param("id")
+
+		user, err := GetUserById(id)
+
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(user)
+			GetCurrentContext().RefreshDefaultContext(user)
+			TheLoggedUser = *user
+
+		}
+		c.HTML(http.StatusOK, "createNewPatient.html", gin.H{
+			"id":       id,
+			"doctor":   user.Name + " " + user.LastName,
+			"Patients": user.Patients,
+		})
+	})
+
+	s.GET("/user/:id/patient/:dni", func(c *gin.Context) {
+		id := c.Param("id")
+		dniOfPatient := c.Param("dni")
+
+		patient, err := GetPatientByDni(dniOfPatient)
+
+		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+
+		log.Println(patient)
+
+		c.HTML(http.StatusOK, "patientDashboard.html", gin.H{
+			"id":      id,
+			"patient": patient,
+		})
+	})
+
+	s.GET("/user/:id/patient/:dni/new-evaluation-file", func(c *gin.Context) {
+		id := c.Param("id")
+		dniOfPatient := c.Param("dni")
+
+		patient, err := GetPatientByDni(dniOfPatient)
+
+		if err != nil {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+
+		//log.Println(patient)
+
+		c.HTML(http.StatusOK, "newEvaluationFile.html", gin.H{
+			"id":      id,
+			"patient": patient,
+		})
+
+	})
+
+	s.GET("/user/:id/patient/:dni/evaluation-file/:evalFileID", func(c *gin.Context) {
+		id := c.Param("id")
+		dniOfPatient := c.Param("dni")
+		idOfEvalFile := c.Param("evalFileID")
+
+		user, err := GetUserById(id)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "%v", err.Error())
+		}
+
+		evaluationFile, err := user.GetEvaluationFileById(idOfEvalFile)
+		if err != nil {
+			c.String(http.StatusInternalServerError, "%v", err.Error())
+		}
+
+		c.HTML(http.StatusOK, "evaluationFileView.html", gin.H{
+			"id":             id,
+			"dni":            dniOfPatient,
+			"user":           user,
+			"evaluationFile": evaluationFile,
+		})
 	})
 
 	return s

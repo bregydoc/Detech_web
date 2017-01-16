@@ -66,7 +66,7 @@
 
 
         <div class="container z-depth-2 informacionGeneral hoverable" >
-            <h4 class="grey-text center-align" style="padding-top: 30px; padding-bottom: 30px"> INFORMACION GENERAL </h4>
+                <h4 class="grey-text center-align" style="padding-top: 30px; padding-bottom: 30px"> INFORMACION GENERAL </h4>
 
             <div class="row center-align" style="margin-left: 10px; margin-right: 10px">
 
@@ -144,6 +144,7 @@
 
 
             {{if .patient.EvaluationFile }}
+                {{$Patient := .patient}}
                 {{$idOfUser := .id}}
                 {{$dniOfPatient := .patient.Dni}}
                 <ul class="collection collapsible ">
@@ -152,26 +153,41 @@
                         <li id="element{{.Id}}">
                             <div class="collapsible-header">
                                 <div class="collection-item avatar">
-                                    <i class="material-icons circle teal lighten-1">perm_identity</i>
+                                    <i class="material-icons circle indigo lighten-2">folder</i>
                                     <span class="title grey-text text-darken-4">
                                         Ficha del {{ .Informacion_General.Fecha}}
                                     </span>
                                     <p class="grey-text">
-
+                                        Edad: {{.Informacion_General.Edad}}<br>
+                                        IMC: {{.Informacion_General.IMC}} <br>
+                                        Fecha de hospitalización: {{.Informacion_General.Fecha_de_hospitalizacion}}
                                     </p>
                                 </div>
 
 
                             </div>
-                            <div class="collapsible-body right-align">
-                                <a class="btn-flat waves-effect detailsPatient" id="btnDet{{.Id}}" href="{{$idOfUser}}/patient/{{.Id}}">
-                                    Detalles
-                                </a>
-                                <button class="btn red lighten-2 waves-effect deleteEvaluationFile" id="btnRmv{{.Id}}">
-                                    <i class="material-icons right">delete</i>
-                                    Eliminar
+                            <div class="collapsible-body row">
 
-                                </button>
+
+                                <div class="col s12 l6">
+                                    <button class="btn teal lighten-2 waves-effect addThermalHistory" id="addTherm{{.Id}}">
+                                        <i class="material-icons left">party_mode</i>
+                                        NUEVO HISTORIAL TERMOGRÁFICO
+
+                                    </button>
+                                </div>
+
+                                <div class="col s12 l6 right-align">
+                                    <a class="btn-flat waves-effect detailsPatient" id="btnDet{{.Id}}" href="{{$dniOfPatient}}/evaluation-file/{{.Id}}">
+                                        Detalles
+                                    </a>
+                                    <button class="btn red lighten-2 waves-effect deleteEvaluationFile" id="btnRmv{{.Id}}">
+                                        <i class="material-icons right">delete</i>
+                                        Eliminar
+
+                                    </button>
+                                </div>
+
                             </div>
                         </li>
 
@@ -223,18 +239,49 @@
     <footer class="page-footer  grey lighten-4">
         <div class="container">
             <div class="row">
-                <div class="col l6 s12">
+                <div class="col l4 s12 offset-l1 center-align">
                     <!--<h5 class="white-text">Detech</h5>-->
                     <img class="responsive-img" src="/Static/Images/logo_with_name_1.png">
                     <!--<p class="grey-text text-lighten-4"></p>-->
+
                 </div>
-                <div class="col l4 offset-l2 s12">
+                <div class="col l3 s12 grey-text">
+                    Dispositivo biomédico
+                    portable, ergonómico,
+                    de fácil uso, orientado
+                    para la prevención
+                    de UPP  en pacientes
+                    en riesgo.
+                    Permitiendo mejorar la
+                    calidad de vida del paciente,
+                    reducir los costos hospitalarios
+                    y reducir las demandas por mala
+                    praxis hospitalaria.
                     <!--
                     <h5 class="grey-text text-darken-4">Desarrolladores:</h5>
                     <ul>
                         <li><a class="grey-text text-darken-2" href="#!">Bregy Malpartida Ramos</a></li>
                     </ul>
                     -->
+                </div>
+
+                <div class="col l3 s12 ">
+                    Contacto:
+                    El polo 1074 Dpto 302 B, Surco, Lima
+
+                    Chief Operating Officer
+                    @: management@detech.cc
+                    Síguenos
+
+                    <div class="row valign-wrapper">
+                        <div class="col l2 valign">
+                            <img class="responsive-img" src="https://www.thekirstyclub.com/assets/images/icon-facebook.svg">
+                        </div>
+                        <div class="col l10 valign">
+                            https://www.facebook.com/detech.cc/
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/gopherjs/gopherjs/js"
 	_ "github.com/gopherjs/gopherjs/js"
 	"github.com/gopherjs/jquery"
-	"github.com/gopherjs/gopherjs/js"
 )
 
 const TOKEN_AUTH = "99524c616bc275d72b28c97f6c61b21669100621"
@@ -24,10 +24,10 @@ func removeEvaluationFile(id string) {
 	dniOfPatient := jQuery("#dni_of_patient").Attr("class")
 	showLoader()
 	jquery.Post("/api/evaluation-file/remove/", map[string]string{
-		"dni":    dniOfPatient,
-		"token":  TOKEN_AUTH,
-		"userId": idOfUser,
-		"idOfEvalFile" : id,
+		"dni":          dniOfPatient,
+		"token":        TOKEN_AUTH,
+		"userId":       idOfUser,
+		"idOfEvalFile": id,
 	}).Done(func(data jquery.Deferred) {
 
 		materialize.Call("toast", "Ficha de evaluacion eliminada", 5000, "", func() {
@@ -43,10 +43,6 @@ func removeEvaluationFile(id string) {
 	})
 
 }
-
-
-
-
 
 func main() {
 	jQuery().Ready(func() {
